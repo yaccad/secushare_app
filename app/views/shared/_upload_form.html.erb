@@ -1,0 +1,23 @@
+<%= form_for(@upload) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+	<%= f.text_field :name, placeholder: "Name file..." %>
+    <%= f.text_area :content, placeholder: "Describe file..." %>
+  </div>
+<p id="counter"></p>
+
+<script type="text/javascript">
+$('#upload_content').keyup(function () {
+    var left = 140 - $(this).val().length;
+    if (left < 0) {
+        $('#counter').css("color","red");
+    }
+	else
+	{
+	$('#counter').css("color","#777777");
+	}
+    $('#counter').text('Characters left: ' + left);
+});
+</script>
+  <%= f.submit "Upload", class: "btn btn-large btn-primary" %>
+<% end %>

@@ -7,6 +7,11 @@ FactoryGirl.define do
     
     factory :admin do
       admin true
-    end    
-  end
+    end
+end  
+    factory :upload do
+      name "FileName"
+      content "Lorem ipsum"
+      user        
+    end
 end

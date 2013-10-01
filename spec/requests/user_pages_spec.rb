@@ -56,10 +56,18 @@ describe "User pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
+    let!(:u1) { FactoryGirl.create(:upload, user: user, name: "FileName1", content: "Foo") }
+    let!(:u2) { FactoryGirl.create(:upload, user: user, name: "FileName2", content: "Bar") }
     before { visit user_path(user) }
 
     it { should have_content(user.name) }
     it { should have_title(user.name) }
+    
+    describe "uploads" do
+       it { should have_content(u1.content) }
+       it { should have_content(u2.content) }
+       it { should have_content(user.uploads.count) }
+     end
   end
 
   describe "signup page" do

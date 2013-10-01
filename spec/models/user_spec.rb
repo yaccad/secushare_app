@@ -114,4 +114,28 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
+  
+  describe "upload associations" do
+
+     before { @user.save }
+     let!(:older_upload) do
+       FactoryGirl.create(:upload, user: @user, created_at: 1.day.ago)
+     end
+     let!(:newer_upload) do
+       FactoryGirl.create(:upload, user: @user, created_at: 1.hour.ago)
+     end
+
+     it "should have the right uploads in the right order" do
+       expect(@user.uploads.to_a).to eq [newer_upload, older_upload]
+     end
+     
+     it "should destroy associated uploads" do
+       uploads = @user.uploads.to_a
+       @user.destroy
+       expect(uploads).not_to be_empty
+       uploads.each do |upload|
+         expect(Upload.where(id: upload.id)).to be_empty
+       end
+     end
+   end
 end

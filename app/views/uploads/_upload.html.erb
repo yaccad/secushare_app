@@ -1,0 +1,12 @@
+<li>
+  <span class="name"><%= upload.name %></span>
+  <span class="content"><%= wrap(upload.content) %></span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(upload.created_at) %> ago.
+  </span>
+  <% if current_user?(upload.user) %>
+    <%= link_to "delete", upload, method: :delete,
+                                     data: { confirm: "You sure?" },
+                                     title: upload.content %>
+  <% end %>
+</li>
